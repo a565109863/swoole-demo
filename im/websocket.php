@@ -19,8 +19,8 @@ class WebSocket {
     }
 
     public function start() {
-        // 监听端口 
-        $this->_server = swoole_websocket_server($this->_host, $this->_port);
+        // 监听端口
+        $this->_server = new swoole_websocket_server($this->_host, $this->_port);
 
         // 监听websocket连接打开事件
         $this->_server->on('open', function (swoole_websocket_server $server, $request) {
@@ -77,13 +77,15 @@ class WebSocket {
                     $server->push($fdId, json_encode($msg, JSON_UNESCAPED_UNICODE));
                 }
             }
-            
+
             echo "客户端已关闭！";
         });
-        
+
         $this->_server->start();
     }
 
 }
 
-new WebSocket('0.0.0.0', 9502);
+$im = new WebSocket('0.0.0.0', 8080);
+
+$im->start();

@@ -1,0 +1,53 @@
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+        <script src="jquery-3.4.1.min.js"></script>
+    </head>
+    <body cz-shortcut-listen="true">
+        <div style="width: 800px;margin: auto;">
+            <div class="msg-page" style="width:100%;height: 300px;background: #c0b5b5;">
+                <div class="receive" style="width: 50%;padding: 5px;">
+                    <div class="sender">发送人:</div>
+                    <div class="msg">收</div>
+                </div>
+                <div class="send" style="width: 50%;float: right;padding: 5px;">
+                    <div class="sender">我：</div>
+                    <div class="msg">test</div>
+                </div>
+            </div>
+            <div class="send">
+                <input type="text" value="" id="text">
+                <button>发送</button>
+            </div>
+        </div>
+        <script>
+            var client = {
+                webSocket : null,
+                init : function (url) {
+                    this.webSocket = new WebSocket(url);
+                    this.webSocket.onopen= this.open;
+                    this.webSocket.onmessage = this.message;
+                },
+                open: function (event) {
+                    this.webSocket.send("加入聊天室");
+                },
+                message: function (event) {
+                    console.log(event);
+                },
+                close: function () {
+                    this.webSocket.close();
+                },
+                error: function (event) {
+                    console.log(event);
+                },
+                sendMsg:function(msg) {
+                    
+                },
+            }
+            
+            client.init("ws://10.90.101.194:8080");
+            client.sendMsg('234');
+            
+        </script>
+</body>
+</html>
